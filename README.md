@@ -5,7 +5,6 @@ This project implements multiple versions of the Single Source Shortest Path (SS
 - MPI Parallel Version  
 - MPI + METIS Partitioned Version  
 - MPI + OpenMP Version  
-- OpenCL Accelerated Version  
 
 We evaluate the performance on the Orkut Social Network Graph dataset from the SNAP collection.
 
@@ -14,7 +13,8 @@ We evaluate the performance on the Orkut Social Network Graph dataset from the S
 ## Documentation
 
 Full Project Report & Analysis:  
-(https://docs.google.com/document/d/1S3q8zTXWKhJrO4E3TpY2yd9NyFy_CdeH7BrN8MWFyuA/edit?usp=sharing)
+[Project Report](https://docs.google.com/document/d/1S3q8zTXWKhJrO4E3TpY2yd9NyFy_CdeH7BrN8MWFyuA/edit?usp=sharing)
+
 ---
 
 ## Directory Structure
@@ -27,13 +27,11 @@ project-root/
 ├── parallelmpi.cpp
 ├── parllelver.cpp
 ├── parallel_omp_mpi.cpp
-├── opencl_sssp.cpp
 ├── preprocessing.py
 ├── com-orkut.ungraph.txt
 ├── orkut.graph
 ├── orkut.graph.part.4
 ```
-
 ---
 
 ## How to Run
@@ -87,33 +85,22 @@ mpirun -np 4 ./test orkut.graph orkut.graph.part.4 1
 ### MPI + OpenMP Version (parallel_omp_mpi.cpp)
 
 ```bash
-mpic++ -fopenmp -O3 -std=c++11 parallel_omp_mpi.cpp -o test
-mpirun -np 4 ./test orkut.graph orkut.graph.part.4 1
+mpic++ -fopenmp -Wall -O3 parallel_omp_mpi.cpp -o test -lm
+mpirun -np 4 ./test com-orkut.ungraph.txt 1
 ```
-
----
-
-### OpenCL Version (opencl_sssp.cpp)
-
-```bash
-g++ -std=c++11 opencl_sssp.cpp -lOpenCL -o test
-./test com-orkut.ungraph.txt 1
-```
-
-The OpenCL version uses GPU acceleration for parallel BFS/Dijkstra traversal.
 
 ---
 
 ## Notes
 
 - Place `com-orkut.ungraph.txt` in the same directory as your code.
-- METIS preprocessing is only required for the MPI+METIS and Hybrid MPI+OpenMP versions.
-- OpenCL version requires OpenCL-compatible GPU and drivers.
+- METIS preprocessing is only required for the MPI+METIS and MPI+OpenMP versions.
+- Ensure OpenMP is supported in your compiler and OpenMPI is installed for MPI runs.
 
 ---
 
 ## Authors
 
 Maryum Fasih  
-Team: Maryum Fasih 22i0756, Abeer Jawad 22i1041, Mahum Hamid 22i1009  
-FAST-NUCES – Parallel & Distributed Computing Project
+**Team:** Maryum Fasih (22i0756), Mahum Hamid (22i1009), Abeer Jawad (22i1041)  
+**Institute:** FAST-NUCES – Parallel & Distributed Computing Project
